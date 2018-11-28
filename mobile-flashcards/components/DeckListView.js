@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchDeckResults } from '../utils/api';
 import { receiveDecks } from '../actions';
+import { red, green, purple, white, black, lightGray, lightBlue, gray } from '../utils/colours';
+import { AppLoading } from 'expo';
 
 
 class DeckListView extends Component {
@@ -35,9 +37,10 @@ class DeckListView extends Component {
       <View style={styles.container}>
         
         {decksArray.map((deck) => (
-          <View key={decks[deck].title}>
-            <Text>{decks[deck].title}</Text>
-          </View>
+          <TouchableOpacity key={decks[deck].title} style={styles.deckContainer}>
+            <Text style={styles.deckTitle}>{decks[deck].title}</Text>
+            <Text style={styles.deckCount}>{decks[deck].questions.length} Cards</Text>
+          </TouchableOpacity>
         ))}
 
       </View>
@@ -52,6 +55,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  deckContainer: {
+    height: 100,
+    width: 300,
+    borderRadius: 10,
+    backgroundColor: lightBlue,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 10
+  },
+  deckTitle: {
+    fontSize: 25,
+  },
+  deckCount: {
+    fontSize: 18,
+    color: gray,
+  }
 });
 
 function mapStateToProps (decks) {
