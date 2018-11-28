@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { fetchDeckResults } from '../utils/api';
+import { receiveDecks } from '../actions';
 
 
 class DeckListView extends Component {
@@ -11,14 +13,33 @@ class DeckListView extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props
+    const { decksData } = this.props;
 
+    fetchDeckResults().then((decks) => decksData(decks))
   }
 
   render() {
+    const { decks, decksArray } = this.props;
+
+    // if deck is empty
+    if (decksArray === null) {
+      return (
+        <View style={styles.container}>
+          <Text>No Decks</Text>
+        </View>
+      )  
+    }
+
+    // display all the decks
     return (
       <View style={styles.container}>
-        <Text>DeckListView</Text>
+        
+        {decksArray.map((deck) => (
+          <View key={decks[deck].title}>
+            <Text>{decks[deck].title}</Text>
+          </View>
+        ))}
+
       </View>
     )
   }
@@ -48,7 +69,7 @@ function mapStateToProps (decks) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    decksObj : (decks) => {
+    decksData : (decks) => {
       dispatch(receiveDecks(decks))
     }
   }
