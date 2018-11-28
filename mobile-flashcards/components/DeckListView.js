@@ -7,6 +7,7 @@ import { red, green, purple, white, black, lightGray, lightBlue, gray } from '..
 import { AppLoading } from 'expo';
 
 
+
 class DeckListView extends Component {
 
   // check if loaded
@@ -21,13 +22,13 @@ class DeckListView extends Component {
   }
 
   render() {
-    const { decks, decksArray } = this.props;
+    const { decks, decksArray, navigation } = this.props;
 
     // if deck is empty
     if (decksArray === null) {
       return (
         <View style={styles.container}>
-          <Text>No Decks</Text>
+          <Text style={styles.deckTitle}>No Decks</Text>
         </View>
       )  
     }
@@ -37,7 +38,11 @@ class DeckListView extends Component {
       <View style={styles.container}>
         
         {decksArray.map((deck) => (
-          <TouchableOpacity key={decks[deck].title} style={styles.deckContainer}>
+          <TouchableOpacity 
+            key={decks[deck].title} 
+            style={styles.deckContainer}
+            onPress={() => navigation.navigate('DeckView', {deckID: deck, title: decks[deck].title})}
+          >
             <Text style={styles.deckTitle}>{decks[deck].title}</Text>
             <Text style={styles.deckCount}>{decks[deck].questions.length} Cards</Text>
           </TouchableOpacity>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import TextButton from './TextButton';
 import { white, purple, black } from '../utils/colours';
 
@@ -7,11 +8,12 @@ import { white, purple, black } from '../utils/colours';
 // click Add Question button to go to NewQuestionView 
 // click Start Quiz to go to QuizView
 
-export default class DeckView extends Component {
+class DeckView extends Component {
   render() {
+    const { deckID, title, deck } = this.props;
     return (
       <View style={styles.container}>
-        <Text>DeckView</Text>
+        <Text>{title}</Text>
         <TextButton style={styles.iosSubmitBtn}>Add Card</TextButton>
         <TextButton style={styles.iosSubmitBtn}>Start Quiz</TextButton>
       </View>
@@ -46,3 +48,15 @@ const styles = StyleSheet.create({
     marginRight: 30,
   },
 })
+
+function mapStateToProps (decks, { navigation }) {
+  const { deckID, title } = navigation.state.params
+
+  return {
+    deckID,
+    title,
+    deck: decks[deckID],
+  }
+}
+
+export default connect(mapStateToProps)(DeckView);

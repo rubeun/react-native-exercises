@@ -65,11 +65,32 @@ const TabNavigatorConfig = {
   }
 }
 
-// @TODO stack navigator when user selects a specific deck. Calls DeckView with deckID
-
 const TabNavigator = createBottomTabNavigator(RouteConfigs, TabNavigatorConfig);
 
 const Tabs = createAppContainer(TabNavigator);
+
+// stack navigator when user selects a specific deck. Calls DeckView with deckID
+
+const StackNavigator = createStackNavigator({
+  Main: {
+    screen: Tabs,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  DeckView: {
+    screen: DeckView,
+    navigationOptions: ({ navigation }) => ({
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      },
+    })
+  }
+})
+
+
+const MainNavigator = createAppContainer(StackNavigator);
 
 export default class App extends React.Component {
   render() {
@@ -77,7 +98,7 @@ export default class App extends React.Component {
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
           <FlashcardStatusBar backgroundColor={black} barStyle='light-content' />
-          <Tabs />
+          <MainNavigator />
         </View>
       </Provider>
     );
