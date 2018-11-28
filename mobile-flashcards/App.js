@@ -15,6 +15,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DeckListView from './components/DeckListView';
 import NewDeckView from './components/NewDeckView';
 import DeckView from './components/DeckView';
+import NewQuestionView from './components/NewQuestionView';
+import QuizView from './components/QuizView';
 //import { setLocalNotification } from './utils/helpers';
 
 
@@ -83,7 +85,25 @@ const StackNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: black,
+      },
+    })
+  },
+  NewQuestionView: {
+    screen: NewQuestionView,
+    navigationOptions: ({ navigation }) => ({
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black,
+      },
+    })
+  },
+  QuizView: {
+    screen: QuizView,
+    navigationOptions: ({ navigation }) => ({
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: black,
       },
     })
   }

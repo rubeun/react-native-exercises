@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import TextButton from './TextButton';
-import { white, purple, black } from '../utils/colours';
+import { white, purple, black, gray, red } from '../utils/colours';
 
 // DeckView accepts deckID - from which the decks title & questions array of question objects can be obtained
 // click Add Question button to go to NewQuestionView 
@@ -10,45 +10,58 @@ import { white, purple, black } from '../utils/colours';
 
 class DeckView extends Component {
   render() {
-    const { deckID, title, deck } = this.props;
+    const { deckID, title, deck, navigation } = this.props;
     return (
       <View style={styles.container}>
-        <Text>{title}</Text>
-        <TextButton style={styles.iosSubmitBtn}>Add Card</TextButton>
-        <TextButton style={styles.iosSubmitBtn}>Start Quiz</TextButton>
+        <Text style={styles.deckTitle}>{title}</Text>
+        <Text style={styles.deckCount}>{deck.questions.length} Cards</Text>
+        <TextButton 
+          style={styles.addCardBtn}
+          onPress={() => navigation.navigate('NewQuestionView', { deckID: deckID })}
+        >
+          Add Card
+        </TextButton>
+        <TextButton 
+          style={styles.startQuizBtn}
+          onPress={() => navigation.navigate('QuizView', { deckID: deckID, title: title })}
+        >
+          Start Quiz
+        </TextButton>
       </View>
     )
   }
 }
 
+// # STYLES #
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: white
-  },
-  iosSubmitBtn: {
-    backgroundColor: black,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40,
-  },
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  center: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 30,
-    marginRight: 30,
+    alignItems: 'center'
+  },
+  deckTitle: {
+    fontSize: 50,
+    marginBottom: 10,
+  },
+  deckCount: {
+    fontSize: 30,
+    color: gray,
+    marginBottom: 100,
+  },
+  addCardBtn: {
+    backgroundColor: white,
+    fontSize: 30,
+    color: black,
+  },
+  startQuizBtn: {
+    backgroundColor: black,
+    fontSize: 30,
+    color: white,
   },
 })
 
+// # PROPS #
+// get deckID and title and the individual deck with that deckID
 function mapStateToProps (decks, { navigation }) {
   const { deckID, title } = navigation.state.params
 
