@@ -1,21 +1,85 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  StatusBar 
+} from 'react-native';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './reducers';
+import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { red, green, purple, white, black, lightGray } from './utils/colours';
+import { Constants } from 'expo';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import DeckListView from './components/DeckListView';
+import NewDeckView from './components/NewDeckView';
+import DeckView from './components/DeckView';
+//import { setLocalNotification } from './utils/helpers';
+
+
+// custom StatusBar
+function FlashcardStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} /> 
+    </View>
+  )
+}
+
+// ### TAB Navigation ###
+// Tab Navigation configuration with react-navigation v3
+
+const RouteConfigs = {
+  DeckListView: {
+    screen: DeckListView,
+    navigationOptions: {
+      tabBarLabel: 'Decks',
+      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name="credit-card-multiple" size={30} color={tintColor} />
+    }
+  },
+  NewDeckView: {
+    screen: NewDeckView,
+    navigationOptions: {
+      tabBarLabel: 'Add New Deck',
+      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name="credit-card-plus" size={30} color={tintColor} />
+    }
+  }
+}
+
+const TabNavigatorConfig = {
+  navigationOptions: {
+
+  },
+  tabBarOptions: {
+    showIcon: true,
+    activeTintColor: black,
+    labelStyle: {
+      fontSize: 12,
+    },
+    style: {
+      height: 66,
+      backgroundColor: lightGray,
+      shadowColor: 'rgba(0, 0, 0, 0.24)',
+    },
+  }
+}
+
+// @TODO stack navigator when user selects a specific deck. Calls DeckView with deckID
+
+const TabNavigator = createBottomTabNavigator(RouteConfigs, TabNavigatorConfig);
+
+const Tabs = createAppContainer(TabNavigator);
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Rubeun's Mobile Flashcards</Text>
-      </View>
+      <Provider store={createStore(reducer)}>
+        <View style={{flex: 1}}>
+          <FlashcardStatusBar backgroundColor={black} barStyle='light-content' />
+          <Tabs />
+        </View>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
