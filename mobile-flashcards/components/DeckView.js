@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import TextButton from './TextButton';
-import { white, purple, black, gray, red } from '../utils/colours';
+import { white, black, gray } from '../utils/colours';
 
 // DeckView accepts deckID - from which the decks title & questions array of question objects can be obtained
 // click Add Question button to go to NewQuestionView 
@@ -84,9 +84,7 @@ const styles = StyleSheet.create({
 // get deckID and title and the individual deck with that deckID
 function mapStateToProps (decks, { navigation }) {
   const { deckID, title } = navigation.state.params;
-  setTimeout(() => {
-    console.log(decks);
-  }, 2000);
+
   return {
     deckID,
     title,

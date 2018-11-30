@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TextButton from './TextButton';
 import { storeDeck, createNewDeck } from '../utils/api';
 import { addDeck } from '../actions';
-import { green, white, lightGray } from '../utils/colours';
+import { lightGray } from '../utils/colours';
 
 // Create a New Deck
 
@@ -36,14 +36,16 @@ class NewDeckView extends Component {
     const deckID = newDeckName.replace(/\s/g,'_');
     
      // store deck into async then dispatch to redux
-    addNewDeckDispatcher(storeDeck(newDeckName)) // sending deck to redux
+    storeDeck(newDeckName).then(() => {
+      addNewDeckDispatcher(createNewDeck(newDeckName)); 
+    }).then(() => {
+      console.log("Navigate to DeckView with deckID:" + deckID + " title:" + newDeckName);
+      navigation.navigate('DeckView',{ deckID, title: newDeckName });  
+    });
     
     this.setState(() => ({
       newDeckName: '',
     }));
-
-    console.log("Navigate to DeckView with deckID:" + deckID + " title:" + newDeckName);
-    navigation.navigate('DeckView',{ deckID, title: newDeckName });
   }
 
   

@@ -17,7 +17,7 @@ import NewDeckView from './components/NewDeckView';
 import DeckView from './components/DeckView';
 import NewQuestionView from './components/NewQuestionView';
 import QuizView from './components/QuizView';
-//import { setLocalNotification } from './utils/helpers';
+import { setLocalNotification } from './utils/helpers';
 
 
 // custom StatusBar
@@ -114,6 +114,11 @@ const StackNavigator = createStackNavigator({
 const MainNavigator = createAppContainer(StackNavigator);
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification();
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>

@@ -13,7 +13,6 @@ export function fetchDeckResults() {
 export function storeDeck(deckTitle) {
 
   const newDeckObj = createNewDeck(deckTitle);
-
   return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(newDeckObj));
 }
 
@@ -31,7 +30,6 @@ export function removeDeck(key) {
 // creates a new deck with the deckName string and returns the object
 export function createNewDeck(deckName) {
   const deckKey = deckName.replace(/\s/g,'_');
-
   return {
     [deckKey]: {
       title: deckName,
