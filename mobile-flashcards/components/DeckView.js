@@ -11,6 +11,7 @@ import { white, purple, black, gray, red } from '../utils/colours';
 class DeckView extends Component {
   render() {
     const { deckID, title, deck, navigation } = this.props;
+    console.log("DeckView deckID:" + deckID + " title:" + title + " deck:" + deck);
     return (
       <View style={styles.container}>
         <Text style={styles.deckTitle}>{title}</Text>
@@ -63,8 +64,10 @@ const styles = StyleSheet.create({
 // # PROPS #
 // get deckID and title and the individual deck with that deckID
 function mapStateToProps (decks, { navigation }) {
-  const { deckID, title } = navigation.state.params
-
+  const { deckID, title } = navigation.state.params;
+  setTimeout(() => {
+    console.log(decks);
+  }, 2000);
   return {
     deckID,
     title,

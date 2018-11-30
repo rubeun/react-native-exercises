@@ -55,13 +55,14 @@ const TabNavigatorConfig = {
   },
   tabBarOptions: {
     showIcon: true,
-    activeTintColor: black,
+    activeTintColor: white,
     labelStyle: {
       fontSize: 12,
     },
     style: {
       height: 66,
-      backgroundColor: lightGray,
+      color: white,
+      backgroundColor: black,
       shadowColor: 'rgba(0, 0, 0, 0.24)',
     },
   }

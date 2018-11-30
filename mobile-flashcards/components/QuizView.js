@@ -10,25 +10,54 @@ class QuizView extends Component {
 
   // score
   state = {
-    currentQuestionNumber: 1,
-    correct: 0,
+    currentQuestionIndex: null,
+    correctAnswers: null,
+    totalAnswers: null,
+  }
+
+  // increment correctAnswers and go to next question
+  handleAnswerCorrect = () => {
+    this.setState((state) => ({
+      currentQuestionIndex: state.currentQuestionIndex++,
+      correctAnswers: state.correctAnswers++, 
+    }))
+  }
+
+  // go to next question
+  handleAnswerIncorrect = () => {
+    this.setState((state) => ({
+      currentQuestionIndex: state.currentQuestionIndex++,
+    }))
+  }
+  
+
+  componentWillMount() {
+
+    this.setState({
+      currentQuestionIndex: 0,
+      correctAnswers: 0,
+      totalAnswers: this.props.questions.length
+    })
+
   }
 
   render() {
-    const { deckID, questions } = this.props;
-    const { currentQuestionNumber } = this.state;
+    const { questions } = this.props;
+    const { currentQuestionIndex, totalAnswers } = this.state;
+    const questionText = questions[currentQuestionIndex].question;
+    const answerText = questions[currentQuestionIndex].answer;
 
     return (
       <View style={styles.container}>
-        {questions.map((questionAndAnswer, index) => (
-          <QuizCardView
-            key={questionAndAnswer.question}
-            question={questionAndAnswer.question}
-            answer={questionAndAnswer.answer}
-            questionNumber={index+1}
-            totalQuestions={questions.length}
-          />
-        ))}
+        <QuizCardView
+          key={questionText}
+          question={questionText}
+          answer={answerText}
+          questionNumber={currentQuestionIndex + 1}
+          totalQuestions={totalAnswers}
+          handleAnswerCorrect={this.handleAnswerCorrect}
+          handleAnswerIncorrect={this.handleAnswerIncorrect}
+        />
       </View>
     )
   }

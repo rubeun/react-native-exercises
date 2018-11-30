@@ -1,5 +1,7 @@
 import { RECEIVE_DECKS, ADD_DECK } from '../actions';
 
+// @TODO question reducer
+
 function decks(state = {}, action) {
   switch(action.type) {
 

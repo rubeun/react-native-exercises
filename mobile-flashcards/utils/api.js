@@ -10,10 +10,11 @@ export function fetchDeckResults() {
 }
 
 // add deck to AsyncStorage
-export function submitDeck({ deck, key }) {
-  return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-    [key]: deck
-  }))
+export function storeDeck(deckTitle) {
+
+  const newDeckObj = createNewDeck(deckTitle);
+
+  return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(newDeckObj));
 }
 
 // remove deck from AsyncStorage
@@ -23,7 +24,18 @@ export function removeDeck(key) {
       const data = JSON.parse(results); 
       data[key] = undefined;
       delete data[key];
-      AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
+      AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data));
     })
 }
 
+// creates a new deck with the deckName string and returns the object
+export function createNewDeck(deckName) {
+  const deckKey = deckName.replace(/\s/g,'_');
+
+  return {
+    [deckKey]: {
+      title: deckName,
+      questions: []
+    }
+  }
+}

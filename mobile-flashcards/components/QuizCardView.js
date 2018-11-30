@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { connect } from 'react-redux';
-import { red } from '../utils/colours';
+import { red, green, white } from '../utils/colours';
+import TextButton from './TextButton';
 
 // QuizView accepts deckID to get deck questions and answers
 // option: stackNavigator can swap between question, answer and answered panes
@@ -67,7 +68,7 @@ class QuizCardView extends Component {
 
 
   render() {
-    const { question, answer, questionNumber, totalQuestions } = this.props;
+    const { question, answer, questionNumber, totalQuestions, handleAnswerCorrect, handleAnswerIncorrect } = this.props;
 
     const frontAnimatedStyle = {
       transform: [
@@ -82,8 +83,8 @@ class QuizCardView extends Component {
     }
 
     return (
-      <View style={styles.question}>
-        <Text style={styles.questionCount}>{questionNumber}/{totalQuestions}</Text>
+      <View style={styles.container}>
+        <Text style={styles.questionCount}>{questionNumber} / {totalQuestions}</Text>
         <View>
           <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
             <Text style={styles.flipText}>{question}</Text>
@@ -97,6 +98,19 @@ class QuizCardView extends Component {
         >
           <Text style={styles.flipBtn}>{this.state.flipButtonLabel}</Text>
         </TouchableOpacity>
+
+        <TextButton 
+          style={styles.correctBtn}
+          onPress={() => handleAnswerCorrect()}
+        >
+          Correct
+        </TextButton>
+        <TextButton 
+          style={styles.incorrectBtn}
+          onPress={() => handleAnswerIncorrect()}
+        >
+          Incorrect
+        </TextButton>
       </View>
     )
   }
@@ -112,6 +126,9 @@ const styles = StyleSheet.create({
   questionCount: {
     fontSize: 26,
     textAlign: 'left',
+    position: 'absolute',
+    top: 10,
+    left: 0,
   },
   flipCard: {
     width: 300,
@@ -127,14 +144,32 @@ const styles = StyleSheet.create({
     top: 0,
   },
   flipText: {
-    fontSize: 40,
+    fontSize: 42,
     textAlign: 'center',
   },
   flipBtn: {
     fontSize: 25,
     textAlign: 'center',
     color: red,
+    marginBottom: 20,
+  },
+  correctBtn: {
+    fontSize: 20,
+    backgroundColor: green,
+    color: white,
+    width: 200,
+    height: 60,
+    paddingTop: 20,
+  }, 
+  incorrectBtn: {
+    fontSize: 20,
+    backgroundColor: red,
+    color: white,
+    width: 200,
+    height: 60,
+    paddingTop: 20,
+    marginBottom: 10,
   }
 });
 
-export default QuizCardView;
+export default connect()(QuizCardView);
