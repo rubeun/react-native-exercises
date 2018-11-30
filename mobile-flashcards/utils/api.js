@@ -39,3 +39,25 @@ export function createNewDeck(deckName) {
     }
   }
 }
+
+// adds new question and answer to array questions in deck with deckID
+export function addQuestionToDeck(deckID, newQuestion, newAnswer) {
+  const newQuestionArr = [{
+    question: newQuestion,
+    answer: newAnswer,
+  }];
+
+  // load from then store to AsyncStorage
+  AsyncStorage.getItem(DECK_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results);
+      data[deckID] = {
+        ...data[deckID],
+        questions: data[deckID].questions.concat(newQuestionArr)
+      };
+      AsyncStorage.setItem(DECK_STORAGE_KEY,JSON.stringify(data));
+    });
+  
+  // return new question & answer as object for use in storing in AsyncStorage
+  return newQuestionArr[0];
+}

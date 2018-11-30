@@ -1,6 +1,15 @@
-import { RECEIVE_DECKS, ADD_DECK } from '../actions';
+import { RECEIVE_DECKS, ADD_DECK, ADD_QUESTION } from '../actions';
 
 // @TODO question reducer
+function questionReducer(state = {}, action) {
+  switch (action.type) {
+
+    case ADD_QUESTION:
+      return state.concat([action.newQuestionArr]);
+    default :
+      return state;
+  }
+}
 
 function decks(state = {}, action) {
   switch(action.type) {
@@ -15,6 +24,15 @@ function decks(state = {}, action) {
         ...state,
         ...action.deck
       }
+    case ADD_QUESTION :
+      const { deckID } = action;
+      return {
+        ...state,
+        [deckID]: {
+          ...state[deckID],
+          questions: questionReducer(state[deckID].questions, action)
+        }
+      }      
     default :
       return state;
   }
