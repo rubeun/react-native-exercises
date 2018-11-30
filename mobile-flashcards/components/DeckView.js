@@ -11,25 +11,43 @@ import { white, purple, black, gray, red } from '../utils/colours';
 class DeckView extends Component {
   render() {
     const { deckID, title, deck, navigation } = this.props;
+    const deckEmpty = deck.questions.length === 0 ? true : false;
     console.log("DeckView deckID:" + deckID + " title:" + title + " deck:" + deck);
-    return (
-      <View style={styles.container}>
-        <Text style={styles.deckTitle}>{title}</Text>
-        <Text style={styles.deckCount}>{deck.questions.length} Cards</Text>
-        <TextButton 
-          style={styles.addCardBtn}
-          onPress={() => navigation.navigate('NewQuestionView', { deckID: deckID })}
-        >
-          Add Card
-        </TextButton>
-        <TextButton 
-          style={styles.startQuizBtn}
-          onPress={() => navigation.navigate('QuizView', { deckID: deckID, title: title })}
-        >
-          Start Quiz
-        </TextButton>
-      </View>
-    )
+
+    if (deckEmpty) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.deckTitle}>{title}</Text>
+          <Text style={styles.deckCount}>0 Cards</Text>
+          <TextButton 
+            style={styles.addCardBtn}
+            onPress={() => navigation.navigate('NewQuestionView', { deckID: deckID })}
+          >
+            Add Card
+          </TextButton>
+        </View>        
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.deckTitle}>{title}</Text>
+          <Text style={styles.deckCount}>{deck.questions.length} Cards</Text>
+          <TextButton 
+            style={styles.addCardBtn}
+            onPress={() => navigation.navigate('NewQuestionView', { deckID: deckID })}
+          >
+            Add Card
+          </TextButton>
+          <TextButton 
+            style={styles.startQuizBtn}
+            onPress={() => navigation.navigate('QuizView', { deckID: deckID, title: title })}
+          >
+            Start Quiz
+          </TextButton>
+        </View>
+      )  
+    }
+
   }
 }
 
