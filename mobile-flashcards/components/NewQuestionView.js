@@ -53,7 +53,7 @@ class NewQuestionView extends Component {
           onPress={this.handleSubmit}
           disabled={ newQuestion === '' || newAnswer === '' ? true : false }
         >
-          Add Deck
+          Add Card
         </TextButton>
       </View>
     )

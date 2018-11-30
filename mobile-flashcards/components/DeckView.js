@@ -11,7 +11,8 @@ import { white, purple, black, gray, red } from '../utils/colours';
 class DeckView extends Component {
   render() {
     const { deckID, title, deck, navigation } = this.props;
-    const deckEmpty = deck.questions.length === 0 ? true : false;
+    const deckCount = deck.questions.length;
+    const deckEmpty = deckCount === 0 ? true : false;
     console.log("DeckView deckID:" + deckID + " title:" + title + " deck:" + deck);
 
     if (deckEmpty) {
@@ -40,7 +41,7 @@ class DeckView extends Component {
           </TextButton>
           <TextButton 
             style={styles.startQuizBtn}
-            onPress={() => navigation.navigate('QuizView', { deckID: deckID, title: title })}
+            onPress={() => navigation.navigate('QuizView', { deckID: deckID, totalCards: deckCount, title: title })}
           >
             Start Quiz
           </TextButton>

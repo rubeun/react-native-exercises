@@ -43,7 +43,7 @@ class NewDeckView extends Component {
     }));
 
     console.log("Navigate to DeckView with deckID:" + deckID + " title:" + newDeckName);
-    navigation.navigate('DeckView',{ deckID, title: newDeckName })
+    navigation.navigate('DeckView',{ deckID, title: newDeckName });
   }
 
   

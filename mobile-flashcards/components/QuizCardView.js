@@ -38,13 +38,18 @@ class QuizCardView extends Component {
 
   // increment correct number in QuizView state and go to next question
   answerCorrect = () => {
-
+    const { handleAnswerCorrect } = this.props;
+    
+    handleAnswerCorrect();
   }
 
   // go to next question
   answerIncorrect = () => {
+    const { handleAnswerIncorrect } = this.props;
 
+    handleAnswerIncorrect();
   }
+
 
   componentWillMount() {
 
@@ -65,10 +70,8 @@ class QuizCardView extends Component {
 
   }
 
-
-
   render() {
-    const { question, answer, questionNumber, totalQuestions, handleAnswerCorrect, handleAnswerIncorrect } = this.props;
+    const { question, answer, questionNumber, totalQuestions } = this.props;
 
     const frontAnimatedStyle = {
       transform: [
@@ -101,13 +104,13 @@ class QuizCardView extends Component {
 
         <TextButton 
           style={styles.correctBtn}
-          onPress={() => handleAnswerCorrect()}
+          onPress={() => this.answerCorrect()}
         >
           Correct
         </TextButton>
         <TextButton 
           style={styles.incorrectBtn}
-          onPress={() => handleAnswerIncorrect()}
+          onPress={() => this.answerIncorrect()}
         >
           Incorrect
         </TextButton>
