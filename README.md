@@ -1,4 +1,5 @@
 # React Native Exercises/Projects
+Various exercise and projects with React Native
 
 ### Mobile Flashcards
 A simple React Native app built for iOS which allows users to create flippable flashcards for exam preparation. 
